@@ -1,0 +1,1 @@
+La directory Screens contiene il layout delle pagine e i componenti necessari per crearle, incluse le funzioni necessarie prese dalla cartella Services

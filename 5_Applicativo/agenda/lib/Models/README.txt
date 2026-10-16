@@ -1,0 +1,1 @@
+La cartella model racchiude tutte le classi come le task, i raggruppamenti e le impostazioni
