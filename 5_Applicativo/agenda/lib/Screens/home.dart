@@ -3,12 +3,17 @@ import 'package:agenda/Widgets/NavBar.dart';
 import 'package:agenda/Services/DataGiorno.dart';
 import 'package:agenda/Services/Attivita.dart';
 
-void main() => runApp(
-  const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: AttivitaGiornoPage(),
-  ),
-);
+void main() {
+  //carica esempi
+  print('Attività caricate: ${Attivita.lista.length}');
+
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: AttivitaGiornoPage(),
+    ),
+  );
+}
 
 void addAttivita() {
   return;
@@ -16,7 +21,7 @@ void addAttivita() {
 
 void render() {
   final Map<DateTime, int> perData = {};
-  for (final a in Attivita.tutte) {
+  for (final a in Attivita.lista) {
     final giorno = DateTime(a.data.year, a.data.month, a.data.day);
     perData[giorno] = (perData[giorno] ?? 0) + 1;
   }
@@ -31,8 +36,9 @@ class AttivitaGiornoPage extends StatelessWidget {
   static const Color greyBox = Color(0xFFEFEFEF);
 
   @override
-  Widget build(BuildContext context, Attivita attivita) {
+  Widget build(BuildContext context) {
     final date = DataGiorno.oggi();
+    Attivita.caricaDati();
 
     return Scaffold(
       backgroundColor: bg,
@@ -58,12 +64,11 @@ class AttivitaGiornoPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    ActivityCard(
-                      title: 'Scuola',
-                      time: '08:20 – 15:45',
-                      data: date,
-                    ),
-                  ],
+                    for (final attivita in Attivita.lista)
+                      ActivityCard(
+                        attivita: attivita,
+                      ),
+                  ], // Children
                 ),
               ),
             ),
@@ -85,7 +90,7 @@ class AttivitaGiornoPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                date.nomeGiorno,
+                "${Attivita.lista.length}",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
@@ -160,7 +165,7 @@ class AttivitaGiornoPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
             ),
             child: const Text(
-              '3 eventi',
+              'X eventi',
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -205,15 +210,11 @@ class AttivitaGiornoPage extends StatelessWidget {
 
 // Card della singola attività
 class ActivityCard extends StatelessWidget {
-  final String title;
-  final String time;
-  final DataGiorno data;
+  final Attivita attivita;
 
   const ActivityCard({
     super.key,
-    required this.title,
-    required this.time,
-    required this.data,
+    required this.attivita,
   });
 
   @override
@@ -235,7 +236,7 @@ class ActivityCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    title,
+                    attivita.titolo,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -244,7 +245,7 @@ class ActivityCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  data.nomeMese,
+                  "${attivita.oraInizio} : ${attivita.oraFine}",
                   style: const TextStyle(
                     fontSize: 11,
                     color: AttivitaGiornoPage.textGrey,
