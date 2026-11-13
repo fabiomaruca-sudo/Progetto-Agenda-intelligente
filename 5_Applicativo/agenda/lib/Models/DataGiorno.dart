@@ -1,3 +1,4 @@
+//serve esclusivamente come classe calcolatore, riceve una data e torna i nomi in italiano
 class DataGiorno {
   final DateTime data;
 

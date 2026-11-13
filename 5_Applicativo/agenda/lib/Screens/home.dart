@@ -1,7 +1,8 @@
+import 'package:agenda/Screens/ModificaAttivitaPage.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda/Widgets/NavBar.dart';
-import 'package:agenda/Services/DataGiorno.dart';
-import 'package:agenda/Services/Attivita.dart';
+import 'package:agenda/Models/DataGiorno.dart';
+import 'package:agenda/Models/Attivita.dart';
 
 void main() {
   //carica esempi
@@ -19,14 +20,6 @@ void addAttivita() {
   return;
 }
 
-void render() {
-  final Map<DateTime, int> perData = {};
-  for (final a in Attivita.lista) {
-    final giorno = DateTime(a.data.year, a.data.month, a.data.day);
-    perData[giorno] = (perData[giorno] ?? 0) + 1;
-  }
-}
-
 class AttivitaGiornoPage extends StatelessWidget {
   const AttivitaGiornoPage({super.key});
 
@@ -37,7 +30,7 @@ class AttivitaGiornoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DataGiorno.oggi();
+    final date = DataGiorno.format("2025-09-09");
     Attivita.caricaDati();
 
     return Scaffold(
@@ -65,9 +58,8 @@ class AttivitaGiornoPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     for (final attivita in Attivita.lista)
-                      ActivityCard(
-                        attivita: attivita,
-                      ),
+                      if (attivita.confrontaGiorno(date.data))
+                        ActivityCard(attivita: attivita),
                   ], // Children
                 ),
               ),
@@ -209,67 +201,157 @@ class AttivitaGiornoPage extends StatelessWidget {
 }
 
 // Card della singola attività
-class ActivityCard extends StatelessWidget {
+class ActivityCard extends StatefulWidget {
   final Attivita attivita;
 
-  const ActivityCard({
-    super.key,
-    required this.attivita,
-  });
+  const ActivityCard({super.key, required this.attivita});
+
+  @override
+  State<ActivityCard> createState() => _ActivityCardState();
+}
+
+class _ActivityCardState extends State<ActivityCard> {
+  bool _espansa = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: const Color(0xFFEAEAEA)),
-      ),
-      child: Column(
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _espansa = !_espansa;
+        });
+      },
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    attivita.titolo,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AttivitaGiornoPage.textDark,
-                    ),
-                  ),
-                ),
-                Text(
-                  "${attivita.oraInizio} : ${attivita.oraFine}",
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: AttivitaGiornoPage.textGrey,
-                  ),
-                ),
-                const SizedBox(width: 40),
-              ],
+          // STRISCIA COLORATA
+          Container(
+            width: 5,
+            height: _espansa ? 180 : 60,
+            constraints: const BoxConstraints(minHeight: 60),
+            decoration: BoxDecoration(
+              color: Color(
+                int.parse(widget.attivita.colore.replaceFirst('#', '0xFF')),
+              ),
+              borderRadius: BorderRadius.circular(6),
             ),
           ),
-          const SizedBox(height: 8),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              color: AttivitaGiornoPage.greyBox,
-              borderRadius: BorderRadius.circular(2),
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              'Modifica',
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: AttivitaGiornoPage.textDark,
+
+          const SizedBox(width: 6),
+
+          // CARD
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: const Color(0xFFEAEAEA)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // TITOLO E ORARIO
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 12),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.attivita.titolo,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: AttivitaGiornoPage.textDark,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "${widget.attivita.oraInizio} - ${widget.attivita.oraFine}",
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: AttivitaGiornoPage.textGrey,
+                          ),
+                        ),
+                        const SizedBox(width: 40),
+                      ],
+                    ),
+                  ),
+
+                  // CONTENUTO ESPANDIBILE
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 3000),
+                    curve: Curves.easeInOut,
+                    alignment: Alignment.topCenter,
+                    child: _espansa
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 8),
+
+                              Text(
+                                "Descrizione: ${widget.attivita.descrizione}",
+                                style: const TextStyle(fontSize: 12),
+                              ),
+
+                              const SizedBox(height: 6),
+
+                              Text(
+                                "Luogo: ${widget.attivita.luogo}",
+                                style: const TextStyle(fontSize: 12),
+                              ),
+
+                              const SizedBox(height: 6),
+
+                              Text(
+                                "Durata: ${widget.attivita.durata} minuti",
+                                style: const TextStyle(fontSize: 12),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              InkWell(
+                                onTap: () async {
+                                  final modificata = await Navigator.push<bool>(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ModificaAttivitaPage(
+                                            attivita: widget.attivita,
+                                          ),
+                                    ),
+                                  );
+
+                                  if (modificata == true && mounted) {
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AttivitaGiornoPage.greyBox,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Modifica',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                      color: AttivitaGiornoPage.textDark,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ],
               ),
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Bottom navigation personalizzata
 class BottomBar extends StatelessWidget {
-  const BottomBar();
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {

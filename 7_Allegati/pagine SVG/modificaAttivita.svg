@@ -1,0 +1,75 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#F7F7F7"/>
+
+  <!-- Header -->
+  <text x="22" y="38" fill="#1C1C28" font-family="Arial" font-size="21" font-weight="700">Crea attività</text>
+  <text x="22" y="59" fill="#9E9E9E" font-family="Arial" font-size="12">Aggiungi un nuovo evento alla tua agenda</text>
+
+  <!-- Form card -->
+  <rect x="16" y="78" width="358" height="578" rx="9" fill="#FFFFFF" stroke="#EAEAEA"/>
+
+  <!-- Name -->
+  <text x="32" y="111" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Titolo</text>
+  <text x="358" y="111" text-anchor="end" fill="#9E9E9E" font-family="Arial" font-size="10">0/50</text>
+  <rect x="32" y="121" width="326" height="43" rx="6" fill="#FFFFFF" stroke="#E2E2E2"/>
+  <text x="45" y="148" fill="#AAAAAA" font-family="Arial" font-size="12">Es. Lezione di matematica</text>
+
+  <!-- Description -->
+  <text x="32" y="194" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Descrizione</text>
+  <text x="358" y="194" text-anchor="end" fill="#9E9E9E" font-family="Arial" font-size="10">0/150</text>
+  <rect x="32" y="204" width="326" height="76" rx="6" fill="#FFFFFF" stroke="#E2E2E2"/>
+  <text x="45" y="228" fill="#AAAAAA" font-family="Arial" font-size="12">Aggiungi una descrizione...</text>
+
+  <!-- Place -->
+  <text x="32" y="310" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Luogo</text>
+  <text x="358" y="310" text-anchor="end" fill="#9E9E9E" font-family="Arial" font-size="10">0/100</text>
+  <rect x="32" y="320" width="326" height="43" rx="6" fill="#FFFFFF" stroke="#E2E2E2"/>
+  <text x="45" y="347" fill="#AAAAAA" font-family="Arial" font-size="12">Dove si svolge?</text>
+
+  <!-- Date and duration -->
+  <text x="32" y="399" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Data e ora di inizio</text>
+  <rect x="32" y="409" width="326" height="43" rx="6" fill="#FFFFFF" stroke="#E2E2E2"/>
+  <text x="45" y="436" fill="#555555" font-family="Arial" font-size="12">13/11/2026</text>
+  <text x="342" y="436" text-anchor="end" fill="#777777" font-family="Arial" font-size="13">▣</text>
+
+  <text x="32" y="487" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Durata</text>
+  <rect x="32" y="497" width="326" height="43" rx="6" fill="#FFFFFF" stroke="#E2E2E2"/>
+  <text x="45" y="524" fill="#555555" font-family="Arial" font-size="12">60 minuti</text>
+  <text x="342" y="524" text-anchor="end" fill="#777777" font-family="Arial" font-size="12">⌄</text>
+
+  <!-- Color -->
+  <text x="32" y="576" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Colore attività</text>
+  <circle cx="45" cy="607" r="11" fill="#B0306A" stroke="#1C1C28" stroke-width="2"/>
+  <circle cx="79" cy="607" r="10" fill="#6C63C7"/>
+  <circle cx="113" cy="607" r="10" fill="#4C9A85"/>
+  <circle cx="147" cy="607" r="10" fill="#E2A64A"/>
+  <circle cx="181" cy="607" r="10" fill="#5C83B7"/>
+  <circle cx="215" cy="607" r="10" fill="#555555"/>
+  <circle cx="249" cy="607" r="10" fill="#D96B65"/>
+
+  <!-- Voice section -->
+  <rect x="16" y="670" width="358" height="104" rx="9" fill="#FFFFFF" stroke="#EAEAEA"/>
+  <circle cx="51" cy="709" r="20" fill="#F0EAF8"/>
+  <path d="M51 699 C47 699 46 702 46 705 V711 C46 718 56 718 56 711 V705 C56 702 55 699 51 699 Z" fill="#66518D"/>
+  <path d="M42 709 V711 C42 723 60 723 60 711 M51 723 V729 M46 729 H56" fill="none" stroke="#66518D" stroke-width="2" stroke-linecap="round"/>
+  <text x="82" y="705" fill="#1C1C28" font-family="Arial" font-size="13" font-weight="700">Parla per compilare</text>
+  <text x="82" y="723" fill="#9E9E9E" font-family="Arial" font-size="10">Descrivi l'attività a voce</text>
+  <rect x="82" y="736" width="272" height="25" rx="5" fill="#F5F1FA"/>
+  <text x="94" y="753" fill="#827493" font-family="Arial" font-size="10">Il testo riconosciuto apparirà qui...</text>
+
+  <!-- Bottom nav -->
+  <rect x="0" y="790" width="390" height="54" fill="#F2EDF7"/>
+  <g fill="#777080" font-family="Arial" font-size="10" text-anchor="middle">
+    <text x="65" y="824">Home</text>
+    <text x="195" y="824" fill="#66518D" font-weight="700">Attività</text>
+    <text x="325" y="824">Impostazioni</text>
+  </g>
+  <g fill="none" stroke="#777080" stroke-width="1.5">
+    <path d="M58 805 L65 799 L72 805 V813 H58 Z"/>
+    <circle cx="195" cy="805" r="8" fill="#E7DDF3" stroke="#66518D"/>
+    <path d="M191 805 H199 M195 801 V809" stroke="#66518D"/>
+    <circle cx="325" cy="805" r="8"/>
+    <path d="M321 808 L325 801 L329 808 Z"/>
+  </g>
+</svg>
